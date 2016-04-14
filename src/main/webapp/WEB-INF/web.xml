@@ -6,20 +6,20 @@
     <display-name>Archetype Created Web Application</display-name>
 
     <welcome-file-list>
-        <welcome-file>/static/index.html</welcome-file>
+        <welcome-file>/index.html</welcome-file>
     </welcome-file-list>
 
     <error-page>
         <exception-type>java.lang.Throwable</exception-type>
-        <location>/static/500.html</location>
+        <location>/500.html</location>
     </error-page>
     <error-page>
         <error-code>500</error-code>
-        <location>/static/500.html</location>
+        <location>/500.html</location>
     </error-page>
     <error-page>
         <error-code>404</error-code>
-        <location>/static/404.html</location>
+        <location>/404.html</location>
     </error-page>
 
 </web-app>

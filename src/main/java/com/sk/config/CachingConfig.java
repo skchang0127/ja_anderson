@@ -5,7 +5,7 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@EnableCaching
+//@EnableCaching
 public class CachingConfig {
 
     private static final Logger logger = Logger.getLogger(CachingConfig.class);

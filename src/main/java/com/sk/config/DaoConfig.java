@@ -1,22 +1,22 @@
 package com.sk.config;
 
 import org.apache.commons.dbcp.BasicDataSource;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.log4j.Logger;
 import org.mybatis.spring.SqlSessionFactoryBean;
-import org.mybatis.spring.mapper.MapperScannerConfigurer;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 
 @Configuration
 @EnableTransactionManagement(proxyTargetClass = true)
-@PropertySource({"classpath:jdbc.properties"})
+@PropertySource(value={"classpath:jdbc.properties"},ignoreResourceNotFound = true)
+@MapperScan(basePackages = "com.sk.**.dao")
 public class DaoConfig {
     private static final Logger logger = Logger.getLogger(DaoConfig.class);
 
@@ -56,17 +56,10 @@ public class DaoConfig {
     }
 
     @Bean
-    public SqlSessionFactoryBean sqlSessionFactoryBean() {
-        SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
-        factoryBean.setDataSource(dataSource());
-        factoryBean.setMapperLocations(new Resource[]{new ClassPathResource("com/**/dao/sql/*.xml")});
-        return factoryBean;
+    public SqlSessionFactory sqlSessionFactory() throws Exception{
+        SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean();
+        sqlSessionFactory.setDataSource(dataSource());
+        return sqlSessionFactory.getObject();
     }
 
-    @Bean
-    public MapperScannerConfigurer mapperScannerConfigurer() {
-        MapperScannerConfigurer configurer = new MapperScannerConfigurer();
-        configurer.setBasePackage("com.sk.**.dao");
-        return configurer;
-    }
 }
